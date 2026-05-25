@@ -1,0 +1,12 @@
+<odoo>
+    <template id="report_deliveryslip_with_notes" inherit_id="stock.report_deliveryslip">
+        <xpath expr="//div[@class='page']" position="inside">
+            <t t-if="o.sale_note_lines">
+                <div style="margin-top: 10px; font-size: 11px;">
+                    <strong>Notas del Pedido:</strong>
+                    <pre style="white-space: pre-wrap;"><t t-esc="o.sale_note_lines"/></pre>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

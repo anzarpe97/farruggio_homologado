@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_move_form_inherit_is_cruce" model="ir.ui.view">
+        <field name="name">account.move.form.is_cruce</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <!-- Hacer disponible el campo auxiliar has_correlative, propio de este módulo -->
+                <field name="has_correlative" invisible="1"/>
+                <!-- Mostrar is_cruce solo cuando NO hay número de control (correlative vacío o '/') -->
+                <field name="is_cruce" attrs="{'invisible': [('has_correlative', '=', True)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Mostrar el campo calculado en la lista de facturas -->
+    <record id="view_move_tree_inherit_amount_total_div_rate" model="ir.ui.view">
+        <field name="name">account.move.tree.amount_total_div_rate</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total_signed']" position="after">
+                <field name="amount_total_div_rate"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

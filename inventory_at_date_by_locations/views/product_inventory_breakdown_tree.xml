@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista árbol autónoma para Inventario a la Fecha con desglose por ubicaciones -->
+    <record id="view_product_inventory_history_locations_tree" model="ir.ui.view">
+        <field name="name">product.product.inventory.history.locations.tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Inventario a la Fecha" create="0" edit="0" delete="0">
+                <field name="default_code" optional="hide"/>
+                <field name="name"/>
+                <field name="ubicaciones_detalle" string="Ubicaciones (cantidades)"/>
+                <field name="uom_id" optional="hide"/>
+                <field name="type" optional="hide"/>
+                <field name="categ_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,1 @@
+from . import sale_order_pdvsa_mass_invoice_wizard

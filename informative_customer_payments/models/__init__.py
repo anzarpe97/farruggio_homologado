@@ -1,0 +1,1 @@
+from . import informative_payment

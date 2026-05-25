@@ -1,0 +1,23 @@
+{
+    'name': 'Factura Forma libre',
+    'version': '16.0.1.0.0',
+    'summary': 'Formato de impresión personalizado para facturas forma Libre',
+    'category': 'Accounting',
+    'author': 'Marvin Chaviel',
+    "website": "contablesag.com",
+    'license': 'LGPL-3',
+    'depends': ['account', 'account_dual_currency'],
+    'data': [
+        'data/paperformat_data.xml',
+        'data/paperformat_data_sale.xml',
+        'views/account_move_view.xml',
+        'report/invoice_report_dual.xml',
+        'report/invoice_report.xml',
+        'report/sale_report.xml',
+        'report/invoice_template.xml',
+        'report/invoice_template_dual.xml',
+        'report/sale_report_template.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

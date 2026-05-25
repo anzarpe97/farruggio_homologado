@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Acción de servidor para recalcular costos en facturas -->
+    <record id="action_recalculate_invoice_costs" model="ir.actions.server">
+        <field name="name">Recalcular Costos</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records.action_recalculate_costs()
+        </field>
+    </record>
+
+</odoo>

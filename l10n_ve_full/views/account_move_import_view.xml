@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+    <record id="view_move_form_import_page" model="ir.ui.view">
+      <field name="name">account.move.form.import.page</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//sheet/notebook" position="inside">
+          <page string="Importaciones"
+                attrs="{'invisible': [('move_type','not in',('in_invoice','in_refund','in_receipt'))]}">
+            <group>
+              <group>
+                <field name="fecha_importacion"/>
+                <field name="nro_planilla_impor"/>
+                <field name="fecha_declaracion_aduana"/>
+                <field name="nro_declaracion_aduana"/>
+                <field name="nro_expediente_impor"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

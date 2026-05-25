@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_maintenance_request_form_inherit_responsable" model="ir.ui.view">
+        <field name="name">maintenance.request.form.inherit.responsable</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <!-- The maintenance form has two columns of groups; user_id sits in the second column under maintenance_team_id -->
+            <xpath expr="//field[@name='user_id']" position="replace">
+                <field name="responsable"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

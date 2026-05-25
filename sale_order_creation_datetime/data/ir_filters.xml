@@ -1,0 +1,11 @@
+<odoo>
+    <record id="filter_sale_orders_before_2pm" model="ir.filters">
+        <field name="name">Pedidos Caracas hasta 2PM</field>
+        <field name="model_id">sale.order</field>
+        <field name="user_id" eval="False"/> <!-- Global -->
+        <field name="domain">[("create_date", "&gt;=", (context_today() + 'T04:00:00')), ("create_date", "&lt;=", (context_today() + 'T18:00:00'))]</field>
+        <field name="context">{}</field>
+        <field name="is_default" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

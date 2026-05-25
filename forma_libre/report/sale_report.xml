@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <report
+            id="action_report_quotation_custom"
+            string="Presupuesto de Venta"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="forma_libre.report_quotation_template"
+            name="forma_libre.report_quotation_template"
+            print_report_name="'Presupuesto de Venta - %s' % (object.name)"
+            paperformat="sale_report_small"
+        />
+    </data>
+</odoo>

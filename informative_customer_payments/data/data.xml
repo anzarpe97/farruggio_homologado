@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_informative_payment" model="ir.sequence">
+            <field name="name">Pago Informativo</field>
+            <field name="code">informative.payment</field>
+            <field name="prefix">INF/</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+        </record>
+    </data>
+</odoo>

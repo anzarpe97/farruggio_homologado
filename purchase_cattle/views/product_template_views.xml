@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_product_template_form_cattle" model="ir.ui.view">
+        <field name="name">product.template.form.cattle</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchase_ok']" position="before">
+                <field name="is_cattle_product"/>
+                <label for="is_cattle_product"/>
+            </xpath>
+
+           <xpath expr="//sheet/notebook/page[@name='purchase']" position="inside">
+                <group>
+                    <field name="cattle_products_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

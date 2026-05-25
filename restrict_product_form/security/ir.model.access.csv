@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+restrict_product_form_user,restrict.product.form.user,product.model_product_template,restrict_product_form.group_restrict_product_form,1,0,0,0
+restrict_product_form_manager,restrict.product.form.manager,product.model_product_template,base.group_system,1,1,1,1

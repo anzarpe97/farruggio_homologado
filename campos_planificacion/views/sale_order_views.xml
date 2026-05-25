@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherit_kilos" model="ir.ui.view">
+        <field name="name">sale.order.form.kilos</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='note']" position="after">
+                <field string="Cantidad Total de Kg" name="total_kg_qty" readonly="1"/>
+                <field string="Cantidad Total de Unidades" name="total_und_qty" readonly="1"/>
+                <field string="Cantidad Total de Bultos" name="total_bultos_qty" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_inherit_kilos_custom" model="ir.ui.view">
+        <field name="name">sale.order.tree.kilos.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='partner_id']" position="after">
+                <field name="total_kg_qty" string="Total Kilos"/>
+                <field name="total_und_qty" string="Total Unidades"/>
+                <field name="total_bultos_qty" string="Total Bultos"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

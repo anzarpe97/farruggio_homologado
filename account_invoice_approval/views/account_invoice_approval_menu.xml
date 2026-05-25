@@ -1,0 +1,38 @@
+<odoo>
+    <!-- ACCIONES primero -->
+    <record id="action_supplier_approved_invoice_list" model="ir.actions.act_window">
+        <field name="name">Facturas Aprobadas</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('move_type', '=', 'in_invoice'), ('x_aprobada', '=', True)]</field>
+    </record>
+
+    <record id="action_supplier_not_approved_invoice_list" model="ir.actions.act_window">
+        <field name="name">Facturas No Aprobadas</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('move_type', '=', 'in_invoice'), ('x_aprobada', '=', False)]</field>
+    </record>
+
+    <!-- MENÚ CONTENEDOR (Agrupación) -->
+    <menuitem id="menu_group_supplier_invoice_approval"
+                name="Aprobación de Facturas"
+                parent="account.menu_finance_payables"
+                sequence="60"
+                groups="account.group_account_invoice"/>
+
+
+    <!-- SUBMENÚS -->
+    <menuitem id="menu_supplier_approved_invoices"
+              name="Facturas Aprobadas"
+              parent="menu_group_supplier_invoice_approval"
+              action="account_invoice_approval.action_supplier_approved_invoice_list"
+              sequence="10"/>
+
+    <menuitem id="menu_supplier_not_approved_invoices"
+              name="Facturas No Aprobadas"
+              parent="menu_group_supplier_invoice_approval"
+              action="account_invoice_approval.action_supplier_not_approved_invoice_list"
+              sequence="20"/>
+
+</odoo>

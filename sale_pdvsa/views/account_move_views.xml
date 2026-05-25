@@ -1,0 +1,23 @@
+<odoo>
+    <record id="view_move_form_inherit_pdvsa_sale_order" model="ir.ui.view">
+        <field name="name">account.move.form.pdvsa.sale.order</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group[1]" position="inside">
+                Pedido de Venta Relacionado:<field name="sale_order_id" readonly="1" string="Pedido de Venta Relacionado"/>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_view_sale_order"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"
+                        attrs="{'invisible': [('sale_order_id', '=', False)]}">
+                    <field name="sale_order_id" widget="statinfo" string="Pedido de Venta"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

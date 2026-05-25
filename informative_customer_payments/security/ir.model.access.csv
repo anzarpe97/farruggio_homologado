@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_informative_payment_user,access.informative.payment.user,model_informative_payment,base.group_user,1,1,1,0
+access_informative_payment_manager,access.informative.payment.manager,model_informative_payment,account.group_account_user,1,1,1,1
+access_informative_payment_analyst,access.informative.payment.analyst,model_informative_payment,informative_customer_payments.group_cxc_analyst,1,1,1,1

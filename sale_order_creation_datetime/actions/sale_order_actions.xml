@@ -1,0 +1,30 @@
+<odoo>
+    <record id="action_sale_order_before_2pm_base" model="ir.actions.act_window">
+        <field name="name">Pedidos Hoy hasta 2PM</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="server_action_sale_order_before_2pm" model="ir.actions.server">
+        <field name="name">Filtrar pedidos hasta 2PM</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="code">
+            action = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'sale.order',
+                'view_mode': 'tree,form',
+                'name': 'Pedidos Hoy hasta 2PM',
+                'domain': env['sale.order']._domain_created_before_2pm(),
+            }
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_order_before_2pm"
+              name="Pedidos hasta 2PM"
+              parent="sale.sale_order_menu"
+              action="server_action_sale_order_before_2pm"
+              sequence="99"/>
+</odoo>

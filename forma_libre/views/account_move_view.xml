@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_move_form_inherit_extra_fields" model="ir.ui.view">
+        <field name="name">account.move.form.extra.fields</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_ve_full.extra_account_move_venezuela"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='identification_id1']" position="after">
+                <field name="obra_no" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                <field name="contrato_no" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                <field name="proveedor_no" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+                <field name="hoja_entrada_servicio" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund'))]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

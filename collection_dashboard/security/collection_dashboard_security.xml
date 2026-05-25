@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Categoría para el módulo de Cobranzas -->
+    <record id="module_category_collection_dashboard" model="ir.module.category">
+        <field name="name">Dashboard de Cobranzas</field>
+        <field name="description">Gestión de cobranzas y seguimiento de facturas</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Grupo: Ejecutivo de Ventas - Solo ve sus propios documentos -->
+    <record id="group_collection_sales_executive" model="res.groups">
+        <field name="name">Ejecutivo de Ventas</field>
+        <field name="category_id" ref="module_category_collection_dashboard"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Los ejecutivos de ventas solo pueden ver los documentos asignados a su zona/equipo de ventas</field>
+    </record>
+
+    <!-- Grupo: Supervisor - Ve todos los documentos de su área -->
+    <record id="group_collection_supervisor" model="res.groups">
+        <field name="name">Supervisor de Cobranzas</field>
+        <field name="category_id" ref="module_category_collection_dashboard"/>
+        <field name="implied_ids" eval="[(4, ref('group_collection_sales_executive'))]"/>
+        <field name="comment">Los supervisores pueden ver todos los documentos de cobranza de todas las zonas</field>
+    </record>
+
+    <!-- Grupo: Gerente - Acceso total sin restricciones -->
+    <record id="group_collection_manager" model="res.groups">
+        <field name="name">Gerente de Cobranzas</field>
+        <field name="category_id" ref="module_category_collection_dashboard"/>
+        <field name="implied_ids" eval="[(4, ref('group_collection_supervisor'))]"/>
+        <field name="comment">Los gerentes tienen acceso total a todos los documentos y configuraciones</field>
+    </record>
+
+    <!-- Regla de seguridad para Ejecutivos: Solo ven documentos de su equipo -->
+    <record id="cobranza_factura_executive_rule" model="ir.rule">
+        <field name="name">Ejecutivo: Solo documentos de su equipo</field>
+        <field name="model_id" ref="model_cobranza_factura"/>
+        <field name="domain_force">[('zona.member_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('group_collection_sales_executive'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Regla de seguridad para Supervisores y Gerentes: Ven todo (excepto diario financiero) -->
+    <record id="cobranza_factura_manager_rule" model="ir.rule">
+        <field name="name">Supervisor/Gerente: Acceso total</field>
+        <field name="model_id" ref="model_cobranza_factura"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_collection_supervisor')), (4, ref('group_collection_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Regla GLOBAL: Excluir SIEMPRE el diario financiero para TODOS (sin grupos = aplica a todos) -->
+    <record id="cobranza_factura_exclude_financial_journal" model="ir.rule">
+        <field name="name">Excluir Diario Financiero (GLOBAL)</field>
+        <field name="model_id" ref="model_cobranza_factura"/>
+        <field name="domain_force">[('journal_id.name', '!=', 'CUENTAS POR COBRAR FINANCIERAS')]</field>
+        <field name="global" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

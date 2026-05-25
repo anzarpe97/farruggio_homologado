@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Cron to sync cobranza.factura from account.move periodically -->
+    <record id="ir_cron_cobranza_sync" model="ir.cron">
+        <field name="name">Cobranza: Sincronizar facturas por cobrar</field>
+        <field name="model_id" ref="model_cobranza_factura"/>
+        <field name="state">code</field>
+        <field name="code">env['cobranza.factura'].sudo().sync_from_account_moves()</field>
+        <field name="active" eval="True"/>
+        <field name="interval_number" eval="1"/>
+        <field name="interval_type">hours</field>
+        <field name="numbercall" eval="-1"/>
+        <field name="doall" eval="False"/>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+</odoo>

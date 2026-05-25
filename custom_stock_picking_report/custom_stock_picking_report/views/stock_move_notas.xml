@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_move_line_tree_inherit_notas" model="ir.ui.view">
+        <field name="name">stock.move.tree.inherit.notas</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="sale_line_id" invisible="1"/>
+                <field name="notas" string="Notas"/>
+            </field>
+        </field>
+    </record>
+</odoo>

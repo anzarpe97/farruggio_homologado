@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="action_sale_order_pdvsa_mass_invoice_wizard" model="ir.actions.act_window">
+            <field name="name">Generar Factura PDVSA</field>
+            <field name="res_model">sale.order.pdvsa.mass.invoice.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_pdvsa_mass_invoice"
+          name="Facturación PDVSA"
+          parent="sale.sale_order_menu"
+          action="action_sale_order_pdvsa_mass_invoice_wizard"/>
+
+    </data>
+</odoo>

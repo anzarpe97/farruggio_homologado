@@ -1,0 +1,15 @@
+<odoo>
+    <!-- <record id="view_picking_form_custom_safe" model="ir.ui.view">
+        <field name="name">picking.form.custom.safe</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            Agrega campos al tree view genérico
+            <xpath expr="//tree[hasclass('o_stock_move_tree')]/field[@name='product_uom_qty']" position="before">
+                <field name="und" string="Und" width="80"/>
+                <field name="nro_paqts" string="Nro Paqts" width="80"/>
+                <field name="nro_cestas" string="Nro Cestas" width="80"/>
+            </xpath>
+        </field>
+    </record> -->
+</odoo>

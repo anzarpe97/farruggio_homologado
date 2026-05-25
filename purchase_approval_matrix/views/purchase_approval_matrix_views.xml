@@ -1,0 +1,55 @@
+<odoo>
+    <!-- Menú de la matriz de aprobaciones -->
+    <menuitem id="menu_purchase_approval_matrix"
+              name="Matriz de Aprobaciones"
+              parent="purchase.menu_purchase_config"/>
+              
+    <!-- Acción de ventana -->
+    <record id="action_purchase_approval_matrix" model="ir.actions.act_window">
+        <field name="name">Matriz de Aprobaciones</field>
+        <field name="res_model">purchase.approval.matrix</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <!-- Asociación del menú a la acción -->
+    <menuitem id="submenu_purchase_approval_matrix"
+              name="Matriz de Aprobaciones"
+              parent="menu_purchase_approval_matrix"
+              action="action_purchase_approval_matrix"/>
+              
+    <!-- Vista de lista -->
+    <record id="view_purchase_approval_matrix_tree" model="ir.ui.view">
+        <field name="name">purchase.approval.matrix.tree</field>
+        <field name="model">purchase.approval.matrix</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="categoria"/>
+                <field name="descripcion"/>
+                <field name="clasificacion"/>
+                <field name="aprobador_inicial_id"/>
+                <field name="aprobador_nivel1_id"/>
+                <field name="aprobador_nivel2_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista de formulario -->
+    <record id="view_purchase_approval_matrix_form" model="ir.ui.view">
+        <field name="name">purchase.approval.matrix.form</field>
+        <field name="model">purchase.approval.matrix</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="categoria"/>
+                        <field name="descripcion"/>
+                        <field name="clasificacion"/>
+                        <field name="aprobador_inicial_id" widget="many2many_tags"/>
+                        <field name="aprobador_nivel1_id" widget="many2many_tags"/>
+                        <field name="aprobador_nivel2_id" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

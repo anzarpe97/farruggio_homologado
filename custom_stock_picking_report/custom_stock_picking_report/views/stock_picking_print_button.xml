@@ -1,0 +1,17 @@
+<odoo>
+    <record id="stock_picking_form_inherit_print_button" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.print.button</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="%(custom_stock_picking_report.action_report_stock_picking_custom)d"
+                        string="Imprimir Orden de Entrega"
+                        type="action"
+                        class="btn-danger"
+                        context="{'default_report_type': 'qweb-pdf'}"
+                        icon="fa-print"/>
+            </header>
+        </field>
+    </record>
+</odoo>

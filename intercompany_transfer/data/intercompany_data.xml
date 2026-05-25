@@ -1,0 +1,9 @@
+<odoo>
+    <record id="intercompany_transit_location" model="stock.location">
+        <field name="name">Intercompany Transit</field>
+        <field name="usage">transit</field>
+        <field name="location_id" ref="stock.stock_location_locations"/> <!-- Parent: Locations -->
+        <field name="company_id" eval="False"/> <!-- Sin compañía -->
+        <field name="active">True</field>
+    </record>
+</odoo>

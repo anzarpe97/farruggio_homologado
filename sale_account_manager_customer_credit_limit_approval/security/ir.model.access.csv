@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_warning_wizard,warning.wizard,model_warning_wizard,base.group_user,1,1,1,1
+access_sale_order_sales_approval,sale.order (ventas),sale.model_sale_order,sale_account_manager_customer_credit_limit_approval.group_sales_approval,1,1,0,0
+access_sale_order_finance_approval,sale.order (finanzas),sale.model_sale_order,sale_account_manager_customer_credit_limit_approval.group_finance_approval,1,1,0,0

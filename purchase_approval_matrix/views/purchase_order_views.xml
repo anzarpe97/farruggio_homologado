@@ -1,0 +1,54 @@
+<odoo>
+    <record id="view_purchase_order_form_approval_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.approval.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">        
+            <!-- Botón: Borrador (Reactivar) -->
+            <button name="button_draft" position="attributes">
+                <attribute name="states">cancel,to approve,approved</attribute>
+            </button>
+            <!-- Botón: Cancelar -->
+            <button name="button_cancel" position="attributes">
+                <attribute name="states">draft,to approve,approved,sent,purchase</attribute>
+            </button>
+            <!-- Líneas readonly si el pedido ya fue aprobado/cancelado/hecho -->
+            <field name="order_line" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ('done', 'cancel', 'approved'))]}</attribute>
+            </field>
+            <!-- Campos de matriz -->
+            <field name="partner_id" position="after">
+                <field name="x_categoria"/>
+                <field name="x_descripcion"/>
+                <field name="x_clasificacion"/>
+                <field name="x_is_approver" invisible="1"/>
+            </field>
+            <sheet position="after">
+                <group>
+                    <field name="approval_state" readonly="1"/>
+                    <field name="approver_user_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+            </sheet>
+        </field>
+    </record>
+    <record id="view_purchase_order_filter_approval_inherit" model="ir.ui.view">
+        <field name="name">request.quotation.select - purchase_order_approved</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="approved" position="before">
+                <filter
+                    name="purchase_order_approved"
+                    string="Órdenes Aprobadas"
+                    domain="[('state', '=', 'approved')]"
+                />
+            </filter>
+        </field>
+    </record>
+    <record id="purchase_purchase_form_action_approval_inherit" model="ir.actions.act_window">
+        <field name="name">Pedidos de Compra</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','in',('approved', 'purchase', 'done'))]</field>
+    </record>
+</odoo>

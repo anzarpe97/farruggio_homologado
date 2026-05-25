@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template t-name="custom_stock_picking_report.report_stock_picking_custom">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div style="font-size: 10px; font-family: Arial, sans-serif; background: #fff; min-height: 700px;">
+                        <style>
+                            .header-table { width: 100%; margin-bottom: 10px; }
+                            .header-table td { vertical-align: top; font-size: 12px; }
+                            .company-info { text-align: right; font-size: 12px; }
+                            .client-info { font-size: 12px; margin-bottom: 8px; }
+                            .order-info { font-size: 12px; margin-bottom: 8px; }
+                            .simple-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+                            .simple-table th, .simple-table td {
+                                border: 1px solid #bbb;
+                                padding: 2px 4px;
+                                font-size: 10px;
+                                text-align: left;
+                            }
+                            .simple-table th { background: #f8f8f8; font-weight: bold; }
+                            .signature-table { width: 100%; margin-top: 40px; }
+                            .signature-table td { text-align: center; vertical-align: bottom; padding: 0 10px; }
+                            .signature-line { border-bottom: 1px solid #222; width: 80%; height: 24px; margin: 0 auto; }
+                            .signature-label {
+                                font-size: 10px;
+                            }
+                            .footer { text-align: center; font-size: 11px; margin-top: 24px; font-weight: normal; color: #222; border-top: 1px solid #bbb; padding: 6px 0; }
+                        </style>
+                        <!-- Encabezado solo con datos empresa -->
+                        <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 10px;">
+                            <div class="company-info">
+                                <div t-esc="o.company_id.name"/>
+                                <div><strong>Dirección:</strong> <span t-esc="o.company_id.partner_id.street"/><t t-if="o.company_id.partner_id.street">, </t><span t-esc="o.company_id.partner_id.city"/><t t-if="o.company_id.partner_id.state_id">, </t><span t-esc="o.company_id.partner_id.state_id.name"/><t t-if="o.company_id.partner_id.country_id">, </t><span t-esc="o.company_id.partner_id.country_id.name"/></div>
+                                <div><strong>RIF:</strong> <span t-esc="o.company_id.vat or ''"/></div>
+                            </div>
+                        </div>
+                        <!-- Orden de entrega -->
+                        <div class="order-info" style="margin-bottom: 4px; font-size: 10px;">
+                            <strong>ORDEN DE ENTREGA:</strong> <span t-esc="o.name"/> | <strong>Fecha:</strong> <span t-esc="o.scheduled_date and o.scheduled_date.strftime('%d/%m/%Y %H:%M:%S') or ''"/> |<strong>Origen:</strong> <span t-esc="o.origin or '-'"/>
+                        </div>
+                        <table class="simple-table" style="width: 60%; margin-bottom: 12px;">
+                            <tr>
+                                <th style="width: 25%; background: #f8f8f8;">Vendedor</th>
+                                <td style="width: 35%;">
+                                    <t t-if="o.partner_id.user_id">
+                                        <span t-esc="o.partner_id.user_id.name"/>
+                                    </t>
+                                    <t t-if="not o.partner_id.user_id">-</t>
+                                </td>
+                                <th style="width: 15%; background: #f8f8f8;">RUTA</th>
+                                <td style="width: 25%;">
+                                    <t t-if="o.x_studio_vendedor">
+                                        <span t-esc="o.x_studio_vendedor.name"/>
+                                    </t>
+                                    <t t-if="o.x_studio_ruta">
+                                        <span t-esc="o.x_studio_ruta.name"/>
+                                    </t>
+                                    <t t-if="not o.x_studio_ruta">-</t>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Datos del cliente y dirección de entrega en dos columnas -->
+                        <table style="width:100%; margin-bottom: 10px; font-size:10px; border-collapse:collapse;">
+                            <tr>
+                                <th style="background:#f8f8f8; border:1px solid #bbb; padding:6px 8px; width:50%; text-align:left;">Datos del cliente</th>
+                                <th style="background:#f8f8f8; border:1px solid #bbb; padding:6px 8px; width:50%; text-align:left;">Dirección de entrega</th>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #bbb; padding:6px 8px; vertical-align:top;">
+                                    <span t-esc="o.partner_id.display_name"/><br/>
+                                    <span t-esc="o.partner_id.street"/>
+                                    <t t-if="o.partner_id.street">, </t>
+                                    <span t-esc="o.partner_id.city"/>
+                                    <t t-if="o.partner_id.state_id">, </t>
+                                    <span t-esc="o.partner_id.state_id.name"/>
+                                    <t t-if="o.partner_id.country_id">, </t>
+                                    <span t-esc="o.partner_id.country_id.name"/>
+                                    <br/>
+                                    <span t-esc="'RIF: ' + (o.partner_id.vat or '')"/>
+                                </td>
+                                <td style="border:1px solid #bbb; padding:6px 8px; vertical-align:top;">
+                                    <span t-esc="o.partner_id.street"/>
+                                    <t t-if="o.partner_id.street">, </t>
+                                    <span t-esc="o.partner_id.city"/>
+                                    <t t-if="o.partner_id.state_id">, </t>
+                                    <span t-esc="o.partner_id.state_id.name"/>
+                                    <t t-if="o.partner_id.country_id">, </t>
+                                    <span t-esc="o.partner_id.country_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <style>
+                            table.simple-table td, table.simple-table th {
+                                padding-top: 6px;
+                                padding-bottom: 6px;
+                                height: 40px;
+                                font-size: 10px;
+                            }
+                        </style>
+                        <!-- Tabla de productos -->
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Pedido</th>
+                                    <th>Und</th>
+                                    <th>Nro de Paquetes</th>
+                                    <th>Nro de Cestas</th>
+                                    <th>Kg Entregados</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.move_ids_without_package" t-as="move">
+                                    <td t-esc="move.product_id.display_name"/>
+                                    <td t-esc="o.get_sale_line_description(move)"/>
+                                    <td t-esc="move.product_uom_qty"/>
+                                    <td t-esc="move.product_uom.name"/>
+                                    <td t-esc="o.get_nro_pqts(move)"/>
+                                    <td>
+                                        <t t-if="o.get_nro_cestas(move)">
+                                            <span t-esc="o.get_nro_cestas(move)"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="move.quantity_done">
+                                            <span t-esc="move.quantity_done"/> <span t-esc="move.product_uom.name"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Términos y condiciones -->
+                        <div style="margin-top: 10px; font-size:10px;">
+                            <strong>Notas del pedido:</strong>
+                            <div>
+                                <span t-esc="o.sale_id.note or ''"/>
+                            </div>
+                        </div>
+                        <!-- Firmas -->
+                        <table class="signature-table">
+                            <tr>
+                                <td><div class="signature-line"></div><div class="signature-label">Elaborado por</div></td>
+                                <td><div class="signature-line"></div><div class="signature-label">Despachado por</div></td>
+                                <td><div class="signature-line"></div><div class="signature-label">Recibido por</div></td>
+                            </tr>
+                        </table>
+                        <div class="footer" style="text-align: center; font-weight: bold;">Documento no fiscal</div>
+                        <t t-if="o != docs[-1]">
+                            <div style="page-break-after: always;"></div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

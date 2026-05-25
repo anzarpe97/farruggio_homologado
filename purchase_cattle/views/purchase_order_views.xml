@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_purchase_order_form_cattle" model="ir.ui.view">
+        <field name="name">purchase.order.form.cattle</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Sección Reses en Canal, solo visible para el grupo `group_cattle_purchase` -->
+            <xpath expr="//notebook/page[@name='products']" position="before">
+                <page name="cattle_products" string="Reses en Canal" groups="purchase_cattle.group_cattle_purchase">
+                    <field name="cattle_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

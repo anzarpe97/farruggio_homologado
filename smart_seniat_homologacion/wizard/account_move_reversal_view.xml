@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_move_reversal" model="ir.ui.view">
+            <field name="name">Extra account.move.reserval Venezuela (Heredado)</field>  <field name="model">account.move.reversal</field>
+            <field name="inherit_id" ref="account.view_account_move_reversal"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="string">Nota de Crédito</attribute>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
