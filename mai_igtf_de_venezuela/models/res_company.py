@@ -48,7 +48,7 @@ class AccountPaymentRegister(models.TransientModel):
 	igtf_percentage = fields.Float(string='% IGTF Divisa', related="company_id.igtf_percentage", store=True)
 	igtf_journal_id = fields.Many2one('account.journal', string='Diario IGTF',
 		domain="[('company_id', '=', company_id), ('type', 'in', ('bank', 'cash'))]",
-        default=lambda self: self.env['account.journal'].search([('name', '=', 'IGTF')], limit=1)
+        default=lambda self: self.env['account.journal'].search([('name', '=', 'IGTF Ventas')], limit=1)
     )
 	receivable_account_id = fields.Many2one('account.account', string='Cuenta Recibos IGTF', 
 		related="company_id.receivable_account_id", store=True)
@@ -56,7 +56,7 @@ class AccountPaymentRegister(models.TransientModel):
 		related="company_id.payable_account_id", store=True)
 	igtf_amount = fields.Monetary(string='Importe IGTF', store=True, readonly=True, tracking=True,
 		compute='_compute_igtf_amount')
-	total_payment = fields.Monetary(string='Total Pagar (Monto + IGTF)', store=True, readonly=True, tracking=True,
+	total_payment = fields.Monetary(string='Total Pagari (Amount + IGTF)', store=True, readonly=True, tracking=True,
 		compute='_compute_igtf_amount')
 
 	def _create_payment_vals_from_wizard(self, batch_result):

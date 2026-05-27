@@ -37,7 +37,12 @@ class StockQuant(models.Model):
                     msg_add = _(" lot {}").format(quant.lot_id.name_get()[0][1])
                 raise ValidationError(
                     _(
-                       "No puedes validar esta operación de inventario porque el nivel de existencias del producto '{name}'{name_lot} se volvería negativo ({q_quantity}) en la ubicación de inventario '{complete_name}', y no se permite inventario negativo para este producto y/o ubicación."
+                        "You cannot validate this stock operation because the "
+                        "stock level of the product '{name}'{name_lot} would "
+                        "become negative "
+                        "({q_quantity}) on the stock location '{complete_name}' "
+                        "and negative stock is "
+                        "not allowed for this product and/or location."
                     ).format(
                         name=quant.product_id.display_name,
                         name_lot=msg_add,

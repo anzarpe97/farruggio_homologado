@@ -3,11 +3,11 @@
         <field name="name">view.warning.wizard.form</field>
         <field name="model">warning.wizard</field>
         <field name="arch" type="xml">
-            <form string="Advertencia">
+            <form string="Warning">
                 <field name="sale_id" invisible="1"/>
                 <field name="name"/>
                 <footer>
-                    <button string="Si" class="btn-primary" type="object" name="action_confirm"/>
+                    <button string="Yes" class="btn-primary" type="object" name="action_confirm"/>
                     <button string="No" class="btn-primary" special="cancel"/>
                 </footer>
             </form>

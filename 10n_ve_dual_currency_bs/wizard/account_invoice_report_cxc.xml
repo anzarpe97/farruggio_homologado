@@ -8,48 +8,40 @@
             <field name="arch" type="xml">
                 <form string="Reporte de cuentas por cobrar">
                     <field name="state" invisible="1"/>
-                    
-                    <group states="choose">
-                        <group>
-                            <field name="start_date" />
-                            <field name="end_date"/>
-                        </group>
-                        <group>
-                            <field name="report_format" widget="selection"/>
-                        </group>
-                        <group>
-                            <field name="user_id" domain="[('share', '=', False)]"/>  <!-- Filtrar solo usuarios internos -->
-                            <field name="partner_id" domain="[('customer_rank', '>', 0)]"/>  <!-- Filtra solo clientes -->
-                            <field name="due_range_ids" widget="many2many_tags"/>  <!-- Filtro de vencimientos -->
-                        </group>
-                    </group>
-
-                    <group states="get">
-                        <group>
+                    <div states="get">
+                         <group>
                             <field name="invoice_data" colspan="4" invisible="1"/>
-                            <field name="file_name_pdf" filename="invoice_data" colspan="4" attrs="{'invisible': [('report_format', '!=', 'pdf')]}"/>
-                            <field name="file_name_excel" filename="invoice_data" colspan="4" attrs="{'invisible': [('report_format', '!=', 'excel')]}"/>
+                            <field name="file_name" filename="invoice_data" colspan="4"/>
                         </group>
-                    </group>
-
+                    </div>
+                    <div states="choose">
+                        <group>
+                                <group>
+                                    <field name="start_date" />
+                                </group>
+                                <group>
+                                    <field name="end_date"/>
+                                </group>
+                        </group>
+                    </div>
                     <footer states="choose">
-                        <button string="Generar Reporte"
+                        <button string="Generate Report"
                             class="btn-primary"
-                            name="action_generate_report"
+                            name="action_invoices_report"
                             type="object"/>
-                        <button string="Cancelar"
+                        <button string="Cancel"
                             class="btn-default"
-                            special="cancel"/>
+                            special="cancel" />
                     </footer>
-
                     <footer states="get">
-                        <button special="cancel" string="Cerrar" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
                     </footer>
                 </form>
             </field>
         </record>
 
-        <record id="action_report_cxc" model="ir.actions.act_window">
+        
+        <record id="action_report_cxc_xls" model="ir.actions.act_window">
             <field name="name">Reporte Cuentas Por Cobrar</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account.invoice.report.cxc</field>
@@ -61,9 +53,9 @@
         </record>
 
         <menuitem 
-            name="Cuentas por Cobrar"
-            action="action_report_cxc" 
-            id="menu_action_report_cxc"
+            name = "CXC"
+            action="action_report_cxc_xls" 
+            id="menu_action_report_cxc_xls"
             parent="dual_fiance_menu_categ"
             sequence="75"/>
 

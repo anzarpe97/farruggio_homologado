@@ -16,16 +16,8 @@ class InhAccountPaymentRegister(models.TransientModel):
     )
 
     def _create_payments(self):
-        res = super(InhAccountPaymentRegister, self)._create_payments()
+        res = super(InhAccountPaymentRegister,self)._create_payments()
         res.tax_day = self.tax_day
-
-        # Asegurarse de manejar múltiples registros en lugar de esperar un singleton
-        for payment in res:
-            l_cliente = payment.line_ids.filtered(lambda line: line.account_id.internal_type == 'receivable')
-            if l_cliente:
-                monto_diferencia = sum(line.debit if line.debit > 0 else line.credit for line in l_cliente)
-                # Aquí puedes usar monto_diferencia según sea necesario
-
         return res
     
 
@@ -49,4 +41,4 @@ class InhAccountPaymentRegister(models.TransientModel):
             else:
                 payment.amount_total_bs = 0.000
 
-
+    

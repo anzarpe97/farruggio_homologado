@@ -14,7 +14,7 @@
                         <field name="http_session_id" />
                     </group>
                     <group string="Logs">
-                        <field name="log_ids" nolabel="1" colspan="2" />
+                        <field name="log_ids" nolabel="1" />
                     </group>
                 </sheet>
             </form>

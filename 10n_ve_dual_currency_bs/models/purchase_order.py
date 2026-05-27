@@ -3,7 +3,8 @@ from odoo import models, fields, osv , api
 from odoo.exceptions import UserError, ValidationError,Warning
 import logging
 import requests
-from decimal import Decimal, ROUND_DOWN
+from decimal import Decimal, ROUND_DOWN, InvalidOperation, ROUND_UP
+
 
 _logger = logging.getLogger(__name__)
 
@@ -58,13 +59,13 @@ class PurchaseOrder(models.Model):
                         impuestod = Decimal(str(impuesto.amount))
                         impuesto_nombre = impuesto.name
                         impuesto_valor = subtoal_amount_bs * impuestod / 100
-                        impuesto_valor = impuesto_valor.quantize(Decimal('1.00'), rounding=ROUND_DOWN)
+                        impuesto_valor = impuesto_valor.quantize(Decimal('1.0000'))
                         if impuesto_nombre in impuestos_totales:
                             impuestos_totales[impuesto_nombre] += impuesto_valor
                         else:
                             impuestos_totales[impuesto_nombre] = impuesto_valor
                             
-        baseImponible =  Decimal(str(baseImponible)).quantize(Decimal('1.00'), rounding=ROUND_DOWN)
+        baseImponible =  Decimal(str(baseImponible)).quantize(Decimal('1.0000'))
         logging.info(baseImponible)
         return impuestos_totales
 
@@ -98,34 +99,30 @@ class PurchaseOrder(models.Model):
         return impuestos_totales
 
 
-    @api.depends('amount_untaxed','amount_tax','amount_total')
+    @api.depends('order_line')
     def _compute_amounts_bs(self):
         for order in self:
+            if order.tax_day > 0:
+                # ya viene convertido
+                base_imponible_bs = sum([line.subtoal_amount_bs for line in order.order_line])
+                base_imponible_bs = Decimal(str(base_imponible_bs)).quantize(Decimal('1.0000'))
 
-            if order.tax_day > 0:                
+                total_impuesto_bs = sum([
+                    round(valor, 6)
+                    for _, valor in order.calcular_totales_por_impuesto().items()
+                ])
+                total_impuesto_bs = Decimal(str(total_impuesto_bs)).quantize(Decimal('1.0000'))
 
-                tax_day = Decimal(str(order.tax_day))
+                total_bs = base_imponible_bs + total_impuesto_bs
 
-
-    
-                total_amount_untaxed = sum([line.price_subtotal for line in order.order_line])
-                str_total_amount_untaxed = (Decimal(total_amount_untaxed) * Decimal(tax_day)).quantize(Decimal('1.0000'))
- 
-                total_impuestoUSD = sum([round(valor,6) for impuesto, valor in self.calcular_totales_por_impuesto_USD().items()])  
-                str_total_impuestoUSD= (Decimal(total_impuestoUSD) * Decimal(tax_day)).quantize(Decimal('1.0000'))
-
-
-                TOTAL = (Decimal(total_amount_untaxed) * Decimal(tax_day) + (Decimal(total_impuestoUSD) * Decimal(tax_day))  ).quantize(Decimal('1.0000'),rounding=ROUND_DOWN)
-                
-                order.amount_untaxed_bs = str_total_amount_untaxed 
-                order.amount_tax_bs = str_total_impuestoUSD
-                order.amount_total_bs =  TOTAL
-            else :
+                order.amount_untaxed_bs = float(base_imponible_bs)
+                order.amount_tax_bs = float(total_impuesto_bs)
+                order.amount_total_bs = float(total_bs)
+            else:
                 order.amount_untaxed_bs = 0.0000
-                order.amount_tax_bs= 0.0000
-                order.amount_total_bs =  0.0000
+                order.amount_tax_bs = 0.0000
+                order.amount_total_bs = 0.0000
 
-    
     def _compute_amounts_line_bs(self):
         for line in self.order_line:
             line._compute_price_unit_bs()
@@ -135,7 +132,6 @@ class PurchaseOrder(models.Model):
     def updateRateDate(self):
         self._compute_amounts_bs()
         self._compute_amounts_line_bs()
-
         
 
 class InheritPurchaseOrderLine(models.Model):
@@ -150,10 +146,10 @@ class InheritPurchaseOrderLine(models.Model):
         string="Precio Bs.", 
         currency_field='currency_ref_id',
         compute='_compute_price_unit_bs',
+        inverse='_inverse_price_unit_bs',
         digits='Product Price',
         store=True, 
         readonly=False, 
-        required=True,
         precompute=True
     )
     subtoal_amount_bs = fields.Monetary(
@@ -163,19 +159,6 @@ class InheritPurchaseOrderLine(models.Model):
         compute='_compute_amounts_bs', 
         tracking=4)    
     
-    @api.depends('price_subtotal')
-    def _compute_amounts_bs(self):
-        for line in self:
-            price_subtotal = Decimal(str(line.price_subtotal))
-            tax_day = Decimal(str(line.order_id.tax_day))
-
-            if line.price_subtotal and  line.order_id.tax_day:
-                subtoal_amount_bs = price_subtotal * tax_day
-                subtoal_amount_bs = subtoal_amount_bs.quantize(Decimal('1.00'), rounding=ROUND_DOWN)
-                line.subtoal_amount_bs= subtoal_amount_bs
-         
-            else :
-                line.subtoal_amount_bs = 0.00
                 
     @api.depends('product_id', 'price_unit',)
     def _compute_price_unit_bs(self):
@@ -185,11 +168,36 @@ class InheritPurchaseOrderLine(models.Model):
             
             if line.price_unit and  line.order_id.tax_day:
                 price_unit_bs = price_subtotal * tax_day
-                price_unit_bs = price_unit_bs.quantize(Decimal('1.00'), rounding=ROUND_DOWN)
+                price_unit_bs = price_unit_bs.quantize(Decimal('1.0000'))
                 line.price_unit_bs = price_unit_bs
             elif line.product_id:
                 line.price_unit_bs = line.product_id.price_bs
             else :
-                line.price_unit_bs = 0.00
-                
-                
+                line.price_unit_bs = 0.00    
+
+    def _inverse_price_unit_bs(self):
+        for line in self:
+            if line.price_unit_bs and line.order_id.tax_day:
+                try:
+                    price_unit_bs = Decimal(str(line.price_unit_bs))
+                    tax_day = Decimal(str(line.order_id.tax_day))
+                    
+                    if tax_day == 0:
+                        raise ValidationError("La tasa 'tax_day' no puede ser cero para el cálculo.")
+                    
+                    price_unit = (price_unit_bs / tax_day).quantize(Decimal('1.0000'))
+                    line.price_unit = float(price_unit)
+                except (InvalidOperation, ZeroDivisionError):
+                    raise ValidationError("Error en el cálculo del precio. Verifique los valores de 'tax_day' y 'price_unit_bs'.")
+            else:
+                line.price_unit = 0.00
+
+    @api.depends('price_unit_bs', 'product_qty', 'discount')
+    def _compute_amounts_bs(self):
+        for line in self:
+            if line.price_unit_bs and line.product_qty:
+                discount_factor = Decimal('1.0') - (Decimal(str(line.discount)) / Decimal('100.0'))
+                subtotal = Decimal(str(line.price_unit_bs)) * Decimal(str(line.product_qty)) * discount_factor
+                line.subtoal_amount_bs = float(subtotal.quantize(Decimal('1.0000')))
+            else:
+                line.subtoal_amount_bs = 0.00

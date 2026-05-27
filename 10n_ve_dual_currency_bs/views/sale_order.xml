@@ -87,9 +87,6 @@
                 </xpath>
                 
                 <xpath expr="//field[@name = 'order_line']//tree/field[@name = 'price_unit']" position="before">
-                    <field name="last_changed_field" />
-                     <field name="active_onchange" />
-                    
                     <field name="price_unit_bs" attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}" options="{'currency_field': 'sale_id.currency_ref_id', 'field_digits': True}"/>
                 </xpath>
 

@@ -6,11 +6,11 @@
 #
 #
 ################################################################################
-#from . import res_currency
-#from . import product_template
-#from . import sale_order
-#from . import account_move
-#from . import purchase_order
-#from . import account_payment_register
-#from . import account_payment
+from . import res_currency
+from . import product_template
+from . import sale_order
+from . import account_move
+from . import purchase_order
+from . import account_payment_register
+from . import account_payment
 

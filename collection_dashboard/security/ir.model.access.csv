@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_cobranza_factura_executive,cobranza.factura.executive,model_cobranza_factura,group_collection_sales_executive,1,1,0,0
-access_cobranza_factura_supervisor,cobranza.factura.supervisor,model_cobranza_factura,group_collection_supervisor,1,1,1,0
-access_cobranza_factura_manager,cobranza.factura.manager,model_cobranza_factura,group_collection_manager,1,1,1,1
-access_cobranza_comercial_user,cobranza.comercial.user,model_cobranza_comercial,base.group_user,1,1,1,1
-access_collection_dashboard_invoice_user,collection.dashboard.invoice.user,model_collection_dashboard_invoice,base.group_user,1,0,0,0

@@ -11,9 +11,8 @@
     'company': 'TechUltra Solutions Private Limited',
     'website': "https://www.techultrasolutions.com/",
     'category': 'Sales',
-    'depends': ['sale_management', 'account_dual_currency'],
+    'depends': ['sale_management'],
     'data': [
-        'security/groups.xml',
         'security/ir.model.access.csv',
         'data/credit_limit_approval_mail.xml',
         'wizard/warning_wizard.xml',

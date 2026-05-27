@@ -14,12 +14,10 @@
             </group>
             <xpath expr="//group[@name='container_row_2']" position="inside">
                 <group name="container_row_credit">
-                    <group string="Límite de Crédito" colspan="2">
+                    <group string="Credit Limit" colspan="2">
                         <field name="credit_check"/>
                         <field name="credit_warning" attrs="{'invisible': [('credit_check', '=', False)]}"/>
                         <field name="credit_blocking" attrs="{'invisible': [('credit_check', '=', False)]}"/>
-                        <field name="credit_warning_usd" attrs="{'invisible': [('credit_check', '=', False)]}"/>
-                        <field name="credit_blocking_usd" attrs="{'invisible': [('credit_check', '=', False)]}"/>
                     </group>
                 </group>
             </xpath>
@@ -32,9 +30,6 @@
         <field name="arch" type="xml">
             <field name="vat" position="after">
                 <field name="accountant_email"/>
-            </field>
-            <field name="currency_id" position="after">
-                <field name="currency_id_dif"/>
             </field>
         </field>
     </record>

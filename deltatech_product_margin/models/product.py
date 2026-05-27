@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    margin = fields.Float(string="Margen de Utilidad", compute="_compute_margin", readonly=False, store=True)
+    margin = fields.Float(string="Margin", compute="_compute_margin", readonly=False, store=True)
 
     @api.depends("standard_price", "list_price")
     def _compute_margin(self):

@@ -264,7 +264,7 @@ class AuditlogRule(models.Model):
         return list(
             n
             for n, f in model._fields.items()
-            if (not f.compute and not f.related) or f.store or f.company_dependent
+            if (not f.compute and not f.related) or f.store
         )
 
     def _make_create(self):

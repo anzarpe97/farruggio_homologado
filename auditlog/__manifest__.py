@@ -3,10 +3,10 @@
 
 {
     "name": "Audit Log",
-    "version": "16.0.2.2.2",
-    "author": "Contables AG",
+    "version": "16.0.2.1.0",
+    "author": "ABF OSIELL, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "website": "wwww.contablesag.com",
+    "website": "https://github.com/OCA/server-tools",
     "category": "Tools",
     "depends": ["base"],
     "data": [
@@ -16,7 +16,6 @@
         "views/auditlog_view.xml",
         "views/http_session_view.xml",
         "views/http_request_view.xml",
-        "views/user_audit_menus.xml",
     ],
     "application": True,
     "installable": True,

@@ -1,8 +1,0 @@
-<odoo>
-    <data noupdate="0">
-        <record id="group_restrict_product_form" model="res.groups">
-            <field name="name">Restrict Product Form</field>
-            <field name="category_id" ref="base.module_category_product"/>
-        </record>
-    </data>
-</odoo>
