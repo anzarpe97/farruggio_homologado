@@ -8,7 +8,7 @@
         <field name='arch' type='xml'>
             <!-- <xpath expr="//field[@name='barcode']" position='after'> -->
             <field name="taxes_id" position="after">
-                <field name='sh_alternative_products' widget='many2many_tags'></field>
+                <field name='sh_alternative_products' string='Alternative Products' widget='many2many_tags'></field>
             </field>
             <!-- </xpath> -->
         </field>
