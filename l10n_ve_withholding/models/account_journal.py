@@ -28,6 +28,7 @@ class AccountJournal(models.Model):
     )
     apply_iva = fields.Boolean('¿Utilizar diario para Aplicar Retención IVA?')
     apply_islr = fields.Boolean('¿Utilizar diario para Aplicar Retención ISLR?')
+    is_contingency = fields.Boolean('Diario de contingencia')
     @api.depends('sequence_control_id')
     def _compute_next_control_number(self):
         for rec in self:
