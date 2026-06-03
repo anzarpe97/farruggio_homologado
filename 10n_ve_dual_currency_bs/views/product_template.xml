@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="product.product_product_tree_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='lst_price']" position="before">
-                <field name="price_bs"/>
+                <field name="price_bs" string="Precio de venta BS"/>
             </xpath>
             
         </field>
@@ -21,7 +21,7 @@
         <field name="inherit_id" ref="account.product_template_view_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='list_price']" position="before">
-                <field name="price_bs"/>
+                <field name="price_bs" string="Precio de venta BS"/>
             </xpath>
             
         </field>
@@ -34,12 +34,12 @@
         <field name="inherit_id" ref="product.product_template_kanban_view"/>
         <field name="arch" type="xml">
            <xpath expr="//kanban" position="inside">
-                <field name="price_bs"/>
+                <field name="price_bs" string="Precio de venta BS"/>
                  
             </xpath>
             <xpath expr="//div[@name='product_lst_price']" position="after">
                 <div name="price_bs" class="mt-1">
-                    Precio Bolivares: <field name="price_bs" widget="monetary" options="{'currency_field': 'currency_ref_id', 'field_digits': True}"/>
+                    Precio Bolivares: <field name="price_bs" string="Precio de venta BS" widget="monetary" options="{'currency_field': 'currency_ref_id', 'field_digits': True}"/>
                 </div>
             </xpath>
         </field>
@@ -54,7 +54,7 @@
                     <field name="currency_ref_id" invisible = "1" />
                     <label for="price_bs" class="mt-1"/>
                     <div name="price_bs">
-                        <field name="price_bs" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_ref_id', 'field_digits': True}"/>
+                        <field name="price_bs" string="Precio de venta BS" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_ref_id', 'field_digits': True}"/>
                     </div>
                 </xpath>
 
