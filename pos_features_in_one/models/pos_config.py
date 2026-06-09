@@ -49,7 +49,10 @@ class PosConfig(models.Model):
     allow_pos_customer_button = fields.Boolean(default=True, string="Permitir Botón de Cliente")
     allow_pos_delete_button = fields.Boolean(default=True, string="Permitir Botón de Borrar")
     allow_pos_payment_button = fields.Boolean(default=True, string="Permitir Botón de Pagos")
-    allow_pos_add_product_button = fields.Boolean(default=True, string="Permitir Añadclass ResConfigSettings(models.TransientModel):
+    allow_pos_add_product_button = fields.Boolean(default=True, string="Permitir Añadir Productos")
+
+
+class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     pos_customer_id = fields.Many2one('res.partner', string='Cliente Por Defecto', related='pos_config_id.pos_customer_id', readonly=False)
@@ -78,9 +81,6 @@ class PosConfig(models.Model):
     pos_order_note = fields.Boolean(string="Nota de pedido POS", related='pos_config_id.pos_order_note', readonly=False)
     pos_display_note_in_receipt = fields.Boolean(string="Mostrar nota de pedido en el recibo", related='pos_config_id.pos_display_note_in_receipt', readonly=False)
 
-
-
-
     #### disable options #######
     allow_pos_qty_button = fields.Boolean(string="Permitir Botón de Cantidad", related="pos_config_id.allow_pos_qty_button", readonly=False)
     allow_pos_discount_button = fields.Boolean(string="Permitir Botón de Descuento", related="pos_config_id.allow_pos_discount_button", readonly=False)
@@ -88,7 +88,4 @@ class PosConfig(models.Model):
     allow_pos_customer_button = fields.Boolean(string="Permitir Botón de Cliente", related="pos_config_id.allow_pos_customer_button", readonly=False)
     allow_pos_delete_button = fields.Boolean(string="Permitir Botón de Borrar", related="pos_config_id.allow_pos_delete_button", readonly=False)
     allow_pos_payment_button = fields.Boolean(string="Permitir Botón de Pagos", related="pos_config_id.allow_pos_payment_button", readonly=False)
-    allow_pos_add_product_button = fields.Boolean(string="Permitir Añadir Productos", related="pos_config_id.allow_pos_add_product_button", readonly=False)n", readonly=False)
-
-
-
+    allow_pos_add_product_button = fields.Boolean(string="Permitir Añadir Productos", related="pos_config_id.allow_pos_add_product_button", readonly=False)
