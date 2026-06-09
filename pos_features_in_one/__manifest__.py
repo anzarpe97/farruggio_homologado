@@ -12,7 +12,7 @@
     'author': "Khaled Hassan",
     'website': "https://apps.odoo.com/apps/modules/browse?search=Khaled+hassan",
     'category': 'Point of Sale',
-    'version': '16.0',
+    'version': '16.0.1.0',
     'depends': ['base', 'point_of_sale', 'pos_hr', 'hr','product_app_knk'],
     'data': [
         'security/ir.model.access.csv',
